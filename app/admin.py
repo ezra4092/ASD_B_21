@@ -312,7 +312,7 @@ def crud_menu(file, item_type):
         elif choice == "0":
             break
 
-def admin_menu():
+def admin_menu(ll_peminjaman):
     """Admin main menu"""
     ll_peminjaman = LinkedList()
     while True:

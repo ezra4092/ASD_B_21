@@ -124,7 +124,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Memoar Pulau Buru",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": "2",
+    "stok": 1,
     "tanggal": "13-05-2017"
   },
   {
@@ -140,7 +140,7 @@
     "kategori": "Novel",
     "judul_buku": "1984",
     "nama_penulis": "George Orwell",
-    "stok": "2",
+    "stok": 1,
     "tanggal": "17-02-2016"
   },
   {
