@@ -85,6 +85,30 @@ def cek_data(items, item_type):
 
     return True
 
+def lihat_buku():
+    data_buku = baca_data(BUKU_FILE)
+
+    if not data_buku:
+        print("\nTidak ada data buku.")
+        pause()
+        return
+
+    judul = "📚 DAFTAR BUKU GIE'S LIBRARY 📚"
+    print(f"{judul:^{106}}")
+    print("=" * 106)
+    print(f"| {'No':<5} | {'Judul':<30} | {'Penulis':<25} | {'Stok':^10} | {'Kategori':^20} |")
+    print("=" * 106)
+
+    for i, buku in enumerate(data_buku, start=1):
+        judul_buku = buku.get("judul_buku", "-")
+        nama_penulis = buku.get("nama_penulis", "-")
+        stok = buku.get("stok", "-")
+        kategori = buku.get("kategori", "-")
+
+        print(f"| {i:<5} | {judul_buku:<30} | {nama_penulis:<25} | {stok:^10} | {kategori:^20} | ")
+
+    print("=" * 106)
+
 def pause():
     """Pause and wait for user input"""
     input("\nTekan Enter untuk melanjutkan...")

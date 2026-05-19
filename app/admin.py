@@ -7,22 +7,31 @@ from app.laporan import cetak_laporan_pdf
 def admin_login():
     """Admin login"""
     clear_screen()
+
     print("=" * 50)
     print("Login Admin - Gie's Library")
     print("=" * 50)
-    
+
     username = input("\nUsername: ").strip()
     password = input("Password: ").strip()
-    
+
+    # validasi input kosong
+    if username == "" or password == "":
+        print("\nUsername dan password tidak boleh kosong!")
+        pause()
+        return False
+
+    # validasi login admin
     if username == ADMIN_USN and password == ADMIN_PW:
         print("\nLogin berhasil! Selamat datang, Admin!")
         pause()
         return True
+
     else:
         print("\nUsername atau password salah!")
         pause()
         return False
-    
+
 def tampil_data(file, item_type):
     clear_screen()
     print("=" * 50)

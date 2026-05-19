@@ -3,59 +3,58 @@ from config import USER_FILE, BUKU_FILE
 # from datetime import datetime  # hapus kalau tidak dipakai
 
 
+from app.sistem import baca_data, clear_screen, pause
+from config import USER_FILE
+
+
 def login_pengunjung(ll_peminjaman):
     data_user = baca_data(USER_FILE)
+
+    clear_screen()
+    print("=" * 50)
+    print("LOGIN MEMBER")
+    print("=" * 50)
 
     username = input("Username: ").strip()
     password = input("Password: ").strip()
 
-    user_ditemukan = None
-
-    for user in data_user:
-        if user["username"] == username:
-            user_ditemukan = user
-            break
-    
-    if user_ditemukan is None:
-        print("\nAkun tidak ditemukan! Silakan registrasi terlebih dahulu.")
-        pause()
-        return False
-    
-    if user_ditemukan["password"] == password:
-        print(f"\nLogin berhasil! Selamat datang, {user_ditemukan['nama']}")
-        pause()
-        user_menu(username, ll_peminjaman)
-        return True
-    
-    else:
-        print("\n  ✗ Username atau Password salah!")
-        pause()
-        return False
-    
-
-def lihat_buku():
-    data_buku = baca_data(BUKU_FILE)
-
-    if not data_buku:
-        print("\nTidak ada data buku.")
+    # validasi input kosong
+    if username == "" or password == "":
+        print("\nUsername dan password tidak boleh kosong!")
         pause()
         return
 
-    judul = "📚 DAFTAR BUKU GIE'S LIBRARY 📚"
-    print(f"{judul:^{106}}")
-    print("=" * 106)
-    print(f"| {'No':<5} | {'Judul':<30} | {'Penulis':<25} | {'Stok':^10} | {'Kategori':^20} |")
-    print("=" * 106)
+    user_ditemukan = None
 
-    for i, buku in enumerate(data_buku, start=1):
-        judul_buku = buku.get("judul_buku", "-")
-        nama_penulis = buku.get("nama_penulis", "-")
-        stok = buku.get("stok", "-")
-        kategori = buku.get("kategori", "-")
+    # cari user berdasarkan username dan password
+    for user in data_user:
+        if (
+            user["username"] == username
+            and user["password"] == password
+        ):
+            user_ditemukan = user
+            break
 
-        print(f"| {i:<5} | {judul_buku:<30} | {nama_penulis:<25} | {stok:^10} | {kategori:^20} | ")
+    # kalau akun tidak ditemukan
+    if user_ditemukan is None:
+        print("\nUsername atau password salah!")
+        pause()
+        return
 
-    print("=" * 106)
+    # cek status member
+    if user_ditemukan["member"].lower() != "ada":
+        print("\nKamu belum terdaftar sebagai member!")
+        print("Silakan daftar member ke admin perpustakaan.")
+        pause()
+        return
+
+    # login berhasil
+    print(f"\nLogin berhasil! Selamat datang, {user_ditemukan['nama']}")
+    pause()
+
+    # masuk menu member
+    user_menu(username, ll_peminjaman, True)
+
 
 
 def lihat_status_peminjaman(username_login, ll_peminjaman):
@@ -87,24 +86,27 @@ def lihat_status_peminjaman(username_login, ll_peminjaman):
     pause()
 
 
-def user_menu(username_login, ll_peminjaman):
+def user_menu(username_login, ll_peminjaman, is_member):
     while True:
         clear_screen()
+
         print("=" * 50)
-        print("Menu Pengunjung")
+        print("MENU MEMBER")
         print("=" * 50)
-        print("1. Lihat daftar buku")
-        print("2. Lihat status peminjaman")
+
+        print("1. Lihat status peminjaman")
         print("0. Logout")
 
-        choice = input("\nPilih: ")
+        choice = input("\nPilih menu: ")
 
         if choice == "1":
-            lihat_buku()
-            pause()
-        elif choice == "2":
             lihat_status_peminjaman(username_login, ll_peminjaman)
+
         elif choice == "0":
-            print("\nLogout berhasil. Sampai jumpa!")
+            print("\nLogout berhasil.")
             pause()
             break
+
+        else:
+            print("\nPilihan tidak valid!")
+            pause()
