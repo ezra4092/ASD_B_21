@@ -26,6 +26,34 @@ def simpan_data(filename, data):
         print(f"Error saving {filename}: {e}")
         return False
     
+
+def simpan_peminjaman(ll_peminjaman, PEMINJAMAN_FILE):
+    data_list = ll_peminjaman.to_list()
+
+    if not data_list:
+        print("\nBelum ada data peminjaman. Tidak bisa disimpan.")
+        return
+
+    try:
+        # cek kalau file sudah ada → append
+        try:
+            with open(PEMINJAMAN_FILE, "r") as f:
+                data_lama = json.load(f)
+        except:
+            data_lama = []
+
+        # gabungkan data lama + baru
+        data_lama.extend(data_list)
+
+        # simpan ke file
+        with open(PEMINJAMAN_FILE, "w") as f:
+            json.dump(data_lama, f, indent=4)
+
+        print("\nData peminjaman berhasil disimpan ke JSON!")
+
+    except Exception as e:
+        print(f"Terjadi error saat menyimpan: {e}")
+    
 def cek_data(items, item_type):
     if not items:
         print(f"\nBelum ada data {item_type}.")

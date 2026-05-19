@@ -128,7 +128,7 @@ def peminjaman_menu(ll_peminjaman):
             if not data_list:
                 print("\nBelum ada data peminjaman. Tidak bisa disimpan.")
             else:
-                simpan_data(PEMINJAMAN_FILE, data_list)
+                simpan_peminjaman(ll_peminjaman, PEMINJAMAN_FILE)
                 print("\nData peminjaman berhasil disimpan.")
             pause()
         elif choice == "0":
