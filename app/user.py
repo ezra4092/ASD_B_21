@@ -1,6 +1,6 @@
 from app.sistem import baca_data, clear_screen, pause
 from config import USER_FILE, BUKU_FILE
-from datetime import datetime
+# from datetime import datetime  # hapus kalau tidak dipakai
 
 
 def login_pengunjung(ll_peminjaman):
@@ -32,6 +32,7 @@ def login_pengunjung(ll_peminjaman):
         pause()
         return False
     
+
 def lihat_buku():
     data_buku = baca_data(BUKU_FILE)
 
@@ -40,7 +41,8 @@ def lihat_buku():
         pause()
         return
 
-    print(f"{'📚 DAFTAR BUKU GIE\'S LIBRARY 📚':^{106}}")
+    judul = "📚 DAFTAR BUKU GIE'S LIBRARY 📚"
+    print(f"{judul:^{106}}")
     print("=" * 106)
     print(f"| {'No':<5} | {'Judul':<30} | {'Penulis':<25} | {'Stok':^10} | {'Kategori':^20} |")
     print("=" * 106)
@@ -54,6 +56,7 @@ def lihat_buku():
         print(f"| {i:<5} | {judul_buku:<30} | {nama_penulis:<25} | {stok:^10} | {kategori:^20} | ")
 
     print("=" * 106)
+
 
 def lihat_status_peminjaman(username_login, ll_peminjaman):
     semua_data = ll_peminjaman.to_list()
@@ -83,6 +86,7 @@ def lihat_status_peminjaman(username_login, ll_peminjaman):
     print("=" * 72)
     pause()
 
+
 def user_menu(username_login, ll_peminjaman):
     while True:
         clear_screen()
@@ -100,7 +104,6 @@ def user_menu(username_login, ll_peminjaman):
             pause()
         elif choice == "2":
             lihat_status_peminjaman(username_login, ll_peminjaman)
-            pause()
         elif choice == "0":
             print("\nLogout berhasil. Sampai jumpa!")
             pause()
