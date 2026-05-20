@@ -1,5 +1,5 @@
 from app.sistem import baca_data, clear_screen, pause
-from config import USER_FILE, BUKU_FILE
+from config import USER_FILE, PEMINJAMAN_FILE
 # from datetime import datetime  # hapus kalau tidak dipakai
 
 
@@ -58,18 +58,22 @@ def login_pengunjung(ll_peminjaman):
 
 
 def lihat_status_peminjaman(username_login, ll_peminjaman):
-    semua_data = ll_peminjaman.to_list()
+    # Mengambil semua data dari file JSON agar data lebih akurat dan terupdate
+    semua_data = baca_data(PEMINJAMAN_FILE) 
     
+    # Filter data hanya untuk user yang sedang login
     buku_saya = [data for data in semua_data if data["username"] == username_login]
 
-    print(f"\n{'📋 STATUS PEMINJAMAN KAMU 📋':^{72}}")
-    print("=" * 72)
+    # Sesuaikan lebar tabel menjadi 90 karena ada tambahan kolom
+    lebar_tabel = 90
+    print(f"\n{'📋 STATUS PEMINJAMAN KAMU 📋':^{lebar_tabel}}")
+    print("=" * lebar_tabel)
 
     if not buku_saya:
-        print(f"{'Kamu belum meminjam buku apa pun saat ini.':^72}")
+        print(f"{'Kamu belum meminjam buku apa pun saat ini.':^{lebar_tabel}}")
     else:
-        print(f"| {'No':<3} | {'ID Buku':<8} | {'Judul Buku':<25} | {'Tanggal Pinjam':<14} |")
-        print("-" * 72)
+        print(f"| {'No':<3} | {'ID Buku':<8} | {'Judul Buku':<25} | {'Tgl Pinjam':<14} | {'Tgl Kembali':<14} |")
+        print("-" * lebar_tabel)
         
         for i, item in enumerate(buku_saya, start=1):
             id_buku = item.get("id_buku", "-")
@@ -78,11 +82,16 @@ def lihat_status_peminjaman(username_login, ll_peminjaman):
             if len(judul) > 25:
                 judul = judul[:22] + "..."
                 
-            tanggal = item.get("tanggal_peminjaman", "-")
+            tgl_pinjam = item.get("tanggal_peminjaman", "-")
             
-            print(f"| {i:<3} | {id_buku:<8} | {judul:<25} | {tanggal:<14} |")
+            # Jika belum dikembalikan (null/None), tampilkan '-'
+            tgl_kembali = item.get("tanggal_pengembalian")
+            if not tgl_kembali:
+                tgl_kembali = "-"
+            
+            print(f"| {i:<3} | {id_buku:<8} | {judul:<25} | {tgl_pinjam:<14} | {tgl_kembali:<14} |")
     
-    print("=" * 72)
+    print("=" * lebar_tabel)
     pause()
 
 

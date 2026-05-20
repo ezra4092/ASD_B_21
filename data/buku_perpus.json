@@ -4,7 +4,7 @@
     "kategori": "Novel",
     "judul_buku": "Bumi Manusia",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": "2",
+    "stok": 2,
     "tanggal": "20-02-2018"
   },
   {
@@ -20,7 +20,7 @@
     "kategori": "Novel",
     "judul_buku": "Semua Untuk Hindia",
     "nama_penulis": "Iksaka Banu",
-    "stok": "4",
+    "stok": 4,
     "tanggal": "13-09-2022"
   },
   {
@@ -28,7 +28,7 @@
     "kategori": "Novel",
     "judul_buku": "Orang-orang Proyek",
     "nama_penulis": "Ahmad Tohari",
-    "stok": "3",
+    "stok": 2,
     "tanggal": "24-03-2019"
   },
   {
@@ -36,7 +36,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Peralihan Zaman",
     "nama_penulis": "Soe Hok Gie",
-    "stok": "2",
+    "stok": 2,
     "tanggal": "17-08-2020"
   },
   {
@@ -52,7 +52,7 @@
     "kategori": "Novel",
     "judul_buku": "Harimau Harimau",
     "nama_penulis": "Mochtar Lubis",
-    "stok": "3",
+    "stok": 1,
     "tanggal": "27-09-2016"
   },
   {
@@ -60,7 +60,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Kekerasan Budaya Pasca 1965",
     "nama_penulis": "Wijaya Herlambang",
-    "stok": "1",
+    "stok": 1,
     "tanggal": "13-09-2024"
   },
   {
@@ -68,7 +68,7 @@
     "kategori": "Novel",
     "judul_buku": "Lebih Putrih Dariku",
     "nama_penulis": "Dido Michielsen",
-    "stok": "2",
+    "stok": 2,
     "tanggal": "17-10-2020"
   },
   {
@@ -76,7 +76,7 @@
     "kategori": "Novel",
     "judul_buku": "Anak Semua Bangsa",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": "2",
+    "stok": 2,
     "tanggal": "27-12-2016"
   },
   {
@@ -92,7 +92,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Cerita dari Digul",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": "2",
+    "stok": 2,
     "tanggal": "27-12-2018"
   },
   {
@@ -100,7 +100,7 @@
     "kategori": "Novel",
     "judul_buku": "Pangeran dari Timur",
     "nama_penulis": "Iksaka Banu dan Kurnia E.",
-    "stok": "1",
+    "stok": 1,
     "tanggal": "13-07-2022"
   },
   {
@@ -132,7 +132,7 @@
     "kategori": "Pengembangan Diri",
     "judul_buku": "Real Artists Don't Starve",
     "nama_penulis": "Jeff Goins",
-    "stok": "1",
+    "stok": 1,
     "tanggal": "24-03-2023"
   },
   {
@@ -140,7 +140,7 @@
     "kategori": "Novel",
     "judul_buku": "1984",
     "nama_penulis": "George Orwell",
-    "stok": 0,
+    "stok": 2,
     "tanggal": "17-02-2016"
   },
   {

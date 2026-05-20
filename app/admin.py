@@ -71,7 +71,7 @@ def tampil_data(file, item_type):
             print("2. ID User")
             print("3. Status Member")
 
-            pilih = input("Pilih urutan (1/2/3): ").strip()
+            pilih = input("Pilih urutan (1-3): ").strip()
 
             if pilih == "1":
                 data = sorted(data, key=lambda x: x['nama'].lower())
@@ -307,7 +307,7 @@ def crud_menu(file, item_type):
         print("5. Cari Data")
         print("0. Kembali")
         
-        choice = input("\nPilih (0-4): ").strip()
+        choice = input("\nPilih (0-5): ").strip()
         
         if choice == "1":
             tampil_data(file, item_type)
@@ -336,7 +336,7 @@ def admin_menu(ll_peminjaman):
         print("4. Cetak Laporan PDF")
         print("0. Logout")
         
-        choice = input("\nPilih (0-2): ").strip()
+        choice = input("\nPilih (0-4): ").strip()
         
         if choice == "1":
             crud_menu(BUKU_FILE, "buku")

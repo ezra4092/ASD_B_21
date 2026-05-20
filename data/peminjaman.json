@@ -3,18 +3,28 @@
         "username": "shofia",
         "id_buku": "BKU18",
         "judul_buku": "1984",
-        "tanggal_peminjaman": "10-05-2026"
+        "tanggal_peminjaman": "10-05-2026",
+        "tanggal_pengembalian": "22-05-2026"
     },
     {
         "username": "shofia",
         "id_buku": "BKU06",
         "judul_buku": "Bukan Pasar Malam",
-        "tanggal_peminjaman": "19-05-2026"
+        "tanggal_peminjaman": "19-05-2026",
+        "tanggal_pengembalian": null
     },
     {
         "username": "farhan",
         "id_buku": "BKU18",
         "judul_buku": "1984",
-        "tanggal_peminjaman": "19-05-2026"
+        "tanggal_peminjaman": "19-05-2026",
+        "tanggal_pengembalian": "25-05-2026"
+    },
+    {
+        "username": "faira",
+        "id_buku": "BKU07",
+        "judul_buku": "Harimau Harimau",
+        "tanggal_peminjaman": "20-05-2026",
+        "tanggal_pengembalian": null
     }
 ]

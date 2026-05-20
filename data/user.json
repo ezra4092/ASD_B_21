@@ -52,5 +52,14 @@
     "member": "tidak ada",
     "username": "sekar",
     "password": "999"
+  },
+  {
+    "id_user": "U003",
+    "nama": "Faira",
+    "umur": "19",
+    "no_telp": "0812729700",
+    "member": "ada",
+    "username": "faira",
+    "password": "321"
   }
 ]

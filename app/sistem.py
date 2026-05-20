@@ -25,31 +25,46 @@ def simpan_data(filename, data):
     except Exception as e:
         print(f"Error saving {filename}: {e}")
         return False
-    
+
 
 def simpan_peminjaman(ll_peminjaman, PEMINJAMAN_FILE):
     data_list = ll_peminjaman.to_list()
 
     if not data_list:
-        print("\nBelum ada data peminjaman. Tidak bisa disimpan.")
+        print("\nBelum ada data peminjaman di memori. Tidak bisa disimpan.")
         return
 
     try:
-        # cek kalau file sudah ada → append
+        # 1. Baca data lama dari file
         try:
             with open(PEMINJAMAN_FILE, "r") as f:
                 data_lama = json.load(f)
-        except:
+        except (FileNotFoundError, json.JSONDecodeError):
             data_lama = []
 
-        # gabungkan data lama + baru
-        data_lama.extend(data_list)
+        # 2. Gabungkan data (Cegah Duplikat)
+        for data_baru in data_list:
+            ditemukan = False
+            for i, data_file in enumerate(data_lama):
+                # Kita anggap sebuah transaksi unik berdasarkan username, id buku, dan tgl peminjaman
+                if (data_file['username'] == data_baru['username'] and 
+                    data_file['id_buku'] == data_baru['id_buku'] and 
+                    data_file['tanggal_peminjaman'] == data_baru['tanggal_peminjaman']):
+                    
+                    # Update datanya jika ternyata ada perubahan (misal dari Linked List sudah dikembalikan)
+                    data_lama[i] = data_baru
+                    ditemukan = True
+                    break
+            
+            # Jika tidak ditemukan di file JSON (berarti pinjaman baru), tambahkan
+            if not ditemukan:
+                data_lama.append(data_baru)
 
-        # simpan ke file
+        # 3. Simpan kembali secara utuh ke file
         with open(PEMINJAMAN_FILE, "w") as f:
             json.dump(data_lama, f, indent=4)
 
-        print("\nData peminjaman berhasil disimpan ke JSON!")
+        print("\nData peminjaman berhasil disinkronkan dan disimpan ke JSON!")
 
     except Exception as e:
         print(f"Terjadi error saat menyimpan: {e}")
@@ -130,6 +145,6 @@ def cek_member(username):
 
 def cari_buku(input_buku, data_buku):
     for buku in data_buku:
-        if buku["id_buku"] == input_buku or buku["judul_buku"].lower() == input_buku.lower():
+        if buku["id_buku"].lower() == input_buku.lower() or buku["judul_buku"].lower() == input_buku.lower():
             return buku  # ⬅️ ini referensi ke data asli
     return None
