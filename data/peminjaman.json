@@ -26,5 +26,33 @@
         "judul_buku": "Harimau Harimau",
         "tanggal_peminjaman": "20-05-2026",
         "tanggal_pengembalian": null
+    },
+    {
+        "username": "shofia",
+        "id_buku": "BKU20",
+        "judul_buku": "The Jakarta Method",
+        "tanggal_peminjaman": "20-05-2026",
+        "tanggal_pengembalian": null
+    },
+    {
+        "username": "siti",
+        "id_buku": "BKU15",
+        "judul_buku": "Di Bawah Lentera Merah",
+        "tanggal_peminjaman": "20-05-2026",
+        "tanggal_pengembalian": null
+    },
+    {
+        "username": "siti",
+        "id_buku": "BKU04",
+        "judul_buku": "Orang-orang Proyek",
+        "tanggal_peminjaman": "20-05-2026",
+        "tanggal_pengembalian": null
+    },
+    {
+        "username": "siti",
+        "id_buku": "BKU02",
+        "judul_buku": "Rasina",
+        "tanggal_peminjaman": "20-05-2026",
+        "tanggal_pengembalian": null
     }
 ]

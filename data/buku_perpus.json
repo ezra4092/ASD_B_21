@@ -28,7 +28,7 @@
     "kategori": "Novel",
     "judul_buku": "Orang-orang Proyek",
     "nama_penulis": "Ahmad Tohari",
-    "stok": 2,
+    "stok": 1,
     "tanggal": "24-03-2019"
   },
   {
@@ -108,7 +108,7 @@
     "kategori": "Pengembangan Diri",
     "judul_buku": "25 Ways to Win with People",
     "nama_penulis": "John C Maxwell",
-    "stok": 1,
+    "stok": 0,
     "tanggal": "23-10-2017"
   },
   {
@@ -116,7 +116,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Di Bawah Lentera Merah",
     "nama_penulis": "Soe Hok Gie",
-    "stok": 2,
+    "stok": 1,
     "tanggal": "17-01-2019"
   },
   {
@@ -156,7 +156,7 @@
     "kategori": "Politik",
     "judul_buku": "The Jakarta Method",
     "nama_penulis": "Vincent Bevins",
-    "stok": 1,
+    "stok": 0,
     "tanggal": "12-05-2022"
   }
 ]

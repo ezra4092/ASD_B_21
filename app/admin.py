@@ -4,42 +4,41 @@ from app.peminjaman import peminjaman_menu, LinkedList
 from datetime import datetime
 from app.laporan import cetak_laporan_pdf
 
-def admin_login():
-    """Admin login"""
-    clear_screen()
 
+def admin_login():
+    """Proses autentikasi login khusus untuk Admin berdasarkan kredensial di config"""
+    clear_screen()
     print("=" * 50)
     print("Login Admin - Gie's Library")
     print("=" * 50)
-
     username = input("\nUsername: ").strip()
     password = input("Password: ").strip()
-
+    
     # validasi input kosong
     if username == "" or password == "":
         print("\nUsername dan password tidak boleh kosong!")
         pause()
         return False
-
-    # validasi login admin
+        
+    # validasi kecocokan login admin
     if username == ADMIN_USN and password == ADMIN_PW:
         print("\nLogin berhasil! Selamat datang, Admin!")
         pause()
         return True
-
     else:
         print("\nUsername atau password salah!")
         pause()
         return False
 
+
 def tampil_data(file, item_type):
+    """Membaca dan menampilkan data (buku/user) dengan pilihan pengurutan (sorting) dinamis"""
     clear_screen()
     print("=" * 50)
     print(f"Dashboard Admin - Tampil Data {item_type}")
     print("=" * 50)
     
     data = baca_data(file)
-
     # ubah string ke dict kalau perlu
     data = [eval(item) if isinstance(item, str) else item for item in data]
 
@@ -53,14 +52,9 @@ def tampil_data(file, item_type):
             if sort_choice == "1":
                 # SORT BERDASARKAN JUDUL
                 data = sorted(data, key=lambda x: x['judul_buku'].lower())
-            
             elif sort_choice == "2":
                 # SORT BERDASARKAN TANGGAL TERBARU
-                data = sorted(
-                    data,
-                    key=lambda x: datetime.strptime(x['tanggal'], "%d-%m-%Y"),
-                    reverse=True
-                )
+                data = sorted(data, key=lambda x: datetime.strptime(x['tanggal'], "%d-%m-%Y"), reverse=True)
             else:
                 print("Input tidak sesuai, default A-Z")
                 data = sorted(data, key=lambda x: x['judul_buku'].lower())
@@ -70,28 +64,24 @@ def tampil_data(file, item_type):
             print("1. Alfabet (nama user)")
             print("2. ID User")
             print("3. Status Member")
-
             pilih = input("Pilih urutan (1-3): ").strip()
 
             if pilih == "1":
                 data = sorted(data, key=lambda x: x['nama'].lower())
-
             elif pilih == "2":
                 data = sorted(data, key=lambda x: x['id_user'])
-
             elif pilih == "3":
                 data = sorted(data, key=lambda x: 0 if x['member'] == "ada" else 1)
-
             else:
                 print("Default: Nama")
                 data = sorted(data, key=lambda x: x['nama'].lower())
 
-
     cek_data(data, item_type)
     pause()
 
+
 def tambah_data(file, item_type):
-    """Generic add function"""
+    """Menambahkan entri data baru dengan validasi untuk mencegah duplikasi ID atau Username"""
     clear_screen()
     print("=" * 50)
     print(f"Dashboard Admin - Tambah Data {item_type}")
@@ -111,7 +101,7 @@ def tambah_data(file, item_type):
             print("\nKode Buku sudah ada! Gunakan kode lain.")
             pause()
             return
-        
+            
         new_item = {
             "id_buku": id_buku,
             "kategori": kategori,
@@ -128,10 +118,12 @@ def tambah_data(file, item_type):
                 print("\nID User sudah ada! Gunakan ID lain.")
             else:
                 break
+                
         nama = input("Nama: ").strip()
         umur = input("Umur: ").strip()
         no_telp = input("No. Telp: ").strip()
         member = input("Member (ada/tidak ada): ").strip()
+        
         while True:
             username = input("Username: ").strip()
             if username == "":
@@ -140,9 +132,8 @@ def tambah_data(file, item_type):
                 print("Username sudah digunakan!")
             else:
                 break
+                
         password = input("Password: ").strip()
-        
-        
         new_item = {
             "id_user": id_user,
             "nama": nama,
@@ -152,19 +143,19 @@ def tambah_data(file, item_type):
             "username": username,
             "password": password
         }
-    
     else:
         print("\nTipe data tidak dikenali!")
         pause()
         return
-    
+        
     data.append(new_item)
     simpan_data(file, data)
     print("\n✓ Data berhasil ditambahkan!")
     pause()
 
+
 def edit_data(file, item_type):
-    """Generic edit function"""
+    """Mengubah data berdasarkan indeks, otomatis mempertahankan nilai lama jika input baru dikosongkan"""
     clear_screen()
     print("=" * 50)
     print(f"Dashboard Admin - Edit Data {item_type}")
@@ -175,7 +166,7 @@ def edit_data(file, item_type):
     if not cek_data(data, item_type):
         pause()
         return
-    
+        
     try:
         idx = int(input("\nPilih nomor data yang ingin diedit: ").strip())
         if idx < 1 or idx > len(data):
@@ -184,7 +175,7 @@ def edit_data(file, item_type):
         print("\nInput tidak valid!")
         pause()
         return
-    
+        
     item = data[idx - 1]
     
     if item_type == "buku":
@@ -202,6 +193,7 @@ def edit_data(file, item_type):
             "stok": stok,
             "tanggal": datetime.now().strftime("%d-%m-%Y") 
         })
+        
     elif item_type == "user":
         print("\nKosongkan input untuk mempertahankan nilai lama.")
         nama = input(f"Nama ({item['nama']}): ").strip() or item['nama']
@@ -221,8 +213,9 @@ def edit_data(file, item_type):
     print("\nData berhasil diperbarui!")
     pause()
 
+
 def hapus_data(file, item_type):   
-    """Generic delete function"""
+    """Menghapus baris data spesifik berdasarkan indeks dengan sistem konfirmasi keamanan"""
     clear_screen()
     print("=" * 50)
     print(f"Dashboard Admin - Hapus Data {item_type}")
@@ -233,7 +226,7 @@ def hapus_data(file, item_type):
     if not cek_data(data, item_type):
         pause()
         return
-    
+        
     try:
         idx = int(input("\nPilih nomor data yang ingin dihapus: ").strip())
         if idx < 1 or idx > len(data):
@@ -242,7 +235,7 @@ def hapus_data(file, item_type):
         print("\nInput tidak valid!")
         pause()
         return
-    
+        
     confirm = input("\nApakah Anda yakin ingin menghapus data ini? (y/n): ").strip().lower()
     if confirm == 'y':
         del data[idx - 1]
@@ -250,17 +243,17 @@ def hapus_data(file, item_type):
         print("\nData berhasil dihapus!")
     else:
         print("\nPenghapusan dibatalkan.")
-    
     pause()
 
+
 def cari_data(file, item_type):
+    """Mencari dan memfilter data berdasarkan kata kunci (keyword) yang mendekati teks pada file"""
     clear_screen()
     print("=" * 50)
     print(f"Dashboard Admin - Cari Data {item_type}")
     print("=" * 50)
     
     data = baca_data(file)
-
     # ubah ke dict kalau masih string
     data = [eval(item) if isinstance(item, str) else item for item in data]
 
@@ -268,33 +261,30 @@ def cari_data(file, item_type):
         print(f"\nBelum ada data {item_type}.")
         pause()
         return
-    
-    
+        
     if item_type == "buku":
         keyword = input("\nMasukkan judul buku atau nama penulis: ").strip().lower()
         hasil = [
             item for item in data
-            if keyword in item['judul_buku'].lower()
-            or keyword in item['nama_penulis'].lower()
+            if keyword in item['judul_buku'].lower() or keyword in item['nama_penulis'].lower()
         ]
     elif item_type == "user":
         keyword = input("\nMasukkan nama atau username: ").strip().lower()
         hasil = [
             item for item in data
-            if keyword in item['nama'].lower()
-            or keyword in item['username'].lower()
+            if keyword in item['nama'].lower() or keyword in item['username'].lower()
         ]
-    
+        
     # LANGSUNG TAMPILKAN HASIL
     if hasil:
         cek_data(hasil, item_type)
     else:
         print("\nData tidak ditemukan.")
-    
     pause()
 
+
 def crud_menu(file, item_type):
-    """Generic CRUD menu"""
+    """Sub-menu routing untuk menangani operasi CRUD (Tampil, Tambah, Edit, Hapus, Cari)"""
     while True:
         clear_screen()
         print("=" * 50)
@@ -322,9 +312,11 @@ def crud_menu(file, item_type):
         elif choice == "0":
             break
 
+
 def admin_menu(ll_peminjaman):
-    """Admin main menu"""
-    ll_peminjaman = LinkedList()
+    """Menu utama Dashboard Admin untuk mengarahkan pengelola ke berbagai entitas manajemen"""
+    # Catatan: Deklarasi di bawah ini me-reset memori Linked List jika dipanggil. Pastikan ini disengaja.
+    ll_peminjaman = LinkedList() 
     while True:
         clear_screen()
         print("=" * 50)
@@ -350,4 +342,3 @@ def admin_menu(ll_peminjaman):
             print("\nLogging out...")
             pause()
             break
-    
