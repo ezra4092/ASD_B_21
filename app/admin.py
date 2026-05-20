@@ -285,11 +285,11 @@ def cari_data(file, item_type):
             or keyword in item['username'].lower()
         ]
     
-    # ✅ LANGSUNG TAMPILKAN HASIL
+    # LANGSUNG TAMPILKAN HASIL
     if hasil:
         cek_data(hasil, item_type)
     else:
-        print("\n❌ Data tidak ditemukan.")
+        print("\nData tidak ditemukan.")
     
     pause()
 

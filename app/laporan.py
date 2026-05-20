@@ -9,12 +9,13 @@ from reportlab.platypus import (
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
-from app.sistem import baca_data, pause
+from app.sistem import *
 from config import BUKU_FILE, USER_FILE, PEMINJAMAN_FILE
 
 
 def cetak_laporan_pdf():
     while True:
+        clear_screen()
         print("\n" + "=" * 50)
         print("Cetak Laporan PDF")
         print("=" * 50)
