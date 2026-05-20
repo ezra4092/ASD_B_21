@@ -12,7 +12,7 @@
     "kategori": "Novel",
     "judul_buku": "Rasina",
     "nama_penulis": "Iksaka Banu",
-    "stok": 1,
+    "stok": 3,
     "tanggal": "13-07-2022"
   },
   {
@@ -28,7 +28,7 @@
     "kategori": "Novel",
     "judul_buku": "Orang-orang Proyek",
     "nama_penulis": "Ahmad Tohari",
-    "stok": 1,
+    "stok": 2,
     "tanggal": "24-03-2019"
   },
   {
@@ -44,7 +44,7 @@
     "kategori": "Novel",
     "judul_buku": "Bukan Pasar Malam",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": 1,
+    "stok": 4,
     "tanggal": "12-03-2018"
   },
   {
@@ -52,7 +52,7 @@
     "kategori": "Novel",
     "judul_buku": "Harimau Harimau",
     "nama_penulis": "Mochtar Lubis",
-    "stok": 1,
+    "stok": 2,
     "tanggal": "27-09-2016"
   },
   {
@@ -60,7 +60,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Kekerasan Budaya Pasca 1965",
     "nama_penulis": "Wijaya Herlambang",
-    "stok": 1,
+    "stok": 4,
     "tanggal": "13-09-2024"
   },
   {
@@ -76,7 +76,7 @@
     "kategori": "Novel",
     "judul_buku": "Anak Semua Bangsa",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": 2,
+    "stok": 3,
     "tanggal": "27-12-2016"
   },
   {
@@ -100,7 +100,7 @@
     "kategori": "Novel",
     "judul_buku": "Pangeran dari Timur",
     "nama_penulis": "Iksaka Banu dan Kurnia E.",
-    "stok": 1,
+    "stok": 3,
     "tanggal": "13-07-2022"
   },
   {
@@ -108,7 +108,7 @@
     "kategori": "Pengembangan Diri",
     "judul_buku": "25 Ways to Win with People",
     "nama_penulis": "John C Maxwell",
-    "stok": 0,
+    "stok": 2,
     "tanggal": "23-10-2017"
   },
   {
@@ -116,7 +116,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Di Bawah Lentera Merah",
     "nama_penulis": "Soe Hok Gie",
-    "stok": 1,
+    "stok": 3,
     "tanggal": "17-01-2019"
   },
   {
@@ -124,7 +124,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Memoar Pulau Buru",
     "nama_penulis": "Pramoedya Ananta Toer",
-    "stok": 1,
+    "stok": 2,
     "tanggal": "13-05-2017"
   },
   {
@@ -132,7 +132,7 @@
     "kategori": "Pengembangan Diri",
     "judul_buku": "Real Artists Don't Starve",
     "nama_penulis": "Jeff Goins",
-    "stok": 1,
+    "stok": 4,
     "tanggal": "24-03-2023"
   },
   {
@@ -140,7 +140,7 @@
     "kategori": "Novel",
     "judul_buku": "1984",
     "nama_penulis": "George Orwell",
-    "stok": 2,
+    "stok": 4,
     "tanggal": "17-02-2016"
   },
   {
@@ -148,7 +148,7 @@
     "kategori": "Politik",
     "judul_buku": "Why Nations Fail",
     "nama_penulis": "Daron A. dan James A.",
-    "stok": 1,
+    "stok": 2,
     "tanggal": "13-09-2000"
   },
   {
@@ -156,7 +156,7 @@
     "kategori": "Politik",
     "judul_buku": "The Jakarta Method",
     "nama_penulis": "Vincent Bevins",
-    "stok": 0,
+    "stok": 3,
     "tanggal": "12-05-2022"
   }
 ]
