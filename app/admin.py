@@ -49,6 +49,12 @@ def tampil_data(file, item_type):
             print("2. Data terbaru")
             sort_choice = input("\nPilih urutan (1/2): ").strip()
             
+            # Error handling jika inputan kosong
+            if not sort_choice:
+                print("\n[PERINGATAN] Pilihan urutan tidak boleh kosong!")
+                pause()
+                return # Keluar dari fungsi agar tidak lanjut ke cek_data
+
             if sort_choice == "1":
                 # SORT BERDASARKAN JUDUL
                 data = sorted(data, key=lambda x: x['judul_buku'].lower())
@@ -56,7 +62,7 @@ def tampil_data(file, item_type):
                 # SORT BERDASARKAN TANGGAL TERBARU
                 data = sorted(data, key=lambda x: datetime.strptime(x['tanggal'], "%d-%m-%Y"), reverse=True)
             else:
-                print("Input tidak sesuai, default A-Z")
+                print("\nInput tidak sesuai, otomatis menggunakan urutan Alfabet (A-Z).")
                 data = sorted(data, key=lambda x: x['judul_buku'].lower())
 
         elif item_type == "user":
@@ -66,6 +72,12 @@ def tampil_data(file, item_type):
             print("3. Status Member")
             pilih = input("Pilih urutan (1-3): ").strip()
 
+            # Error handling jika inputan kosong
+            if not pilih:
+                print("\n[PERINGATAN] Pilihan urutan tidak boleh kosong!")
+                pause()
+                return
+
             if pilih == "1":
                 data = sorted(data, key=lambda x: x['nama'].lower())
             elif pilih == "2":
@@ -73,87 +85,106 @@ def tampil_data(file, item_type):
             elif pilih == "3":
                 data = sorted(data, key=lambda x: 0 if x['member'] == "ada" else 1)
             else:
-                print("Default: Nama")
+                print("\nInput tidak sesuai, otomatis menggunakan urutan Alfabet (A-Z).")
                 data = sorted(data, key=lambda x: x['nama'].lower())
 
     cek_data(data, item_type)
     pause()
-
-
+    
 def tambah_data(file, item_type):
-    """Menambahkan entri data baru dengan validasi untuk mencegah duplikasi ID atau Username"""
-    clear_screen()
-    print("=" * 50)
-    print(f"Dashboard Admin - Tambah Data {item_type}")
-    print("=" * 50)
+    """Menambahkan entri data baru dengan validasi. Jika salah, tetap di menu tambah data ini."""
     
-    data = baca_data(file)
-    
-    if item_type == "buku":
-        id_buku = input("\nKode Buku: ").strip().upper()
-        kategori = input("Kategori: ").strip()
-        judul_buku = input("Judul Buku: ").strip()
-        nama_penulis = input("Nama Penulis: ").strip()
-        stok = input("Stok: ").strip()
-        tanggal = datetime.now().strftime("%d-%m-%Y")
+    while True: # Loop utama agar Admin tetap di dashboard "Tambah Data"
+        clear_screen()
+        print("=" * 50)
+        print(f"Dashboard Admin - Tambah Data {item_type}")
+        print("=" * 50)
         
-        if any(item['id_buku'] == id_buku for item in data):
-            print("\nKode Buku sudah ada! Gunakan kode lain.")
-            pause()
-            return
+        data = baca_data(file)
+        
+        if item_type == "buku":
+            # --- INPUT KODE BUKU ---
+            id_buku = input("\nKode Buku (atau ketik 'batal' untuk kembali): ").strip().upper()
+            if id_buku == 'BATAL': break 
             
-        new_item = {
-            "id_buku": id_buku,
-            "kategori": kategori,
-            "judul_buku": judul_buku,
-            "nama_penulis": nama_penulis,
-            "stok": stok,
-            "tanggal": tanggal
-        }
-        
-    elif item_type == "user":
-        while True:
-            id_user = input("\nID User: ").strip().upper()
+            if not id_buku:
+                print("Error: Kode Buku tidak boleh kosong!")
+                pause(); continue # Balik ke atas (Dashboard Tambah Data)
+
+            if any(item['id_buku'] == id_buku for item in data):
+                print("Error: Kode Buku sudah ada! Gunakan kode lain.")
+                pause(); continue
+
+            # --- INPUT DATA LAINNYA ---
+            kategori = input("Kategori: ").strip()
+            judul_buku = input("Judul Buku: ").strip()
+            nama_penulis = input("Nama Penulis: ").strip()
+            stok = input("Stok: ").strip()
+            
+            if not all([kategori, judul_buku, nama_penulis, stok]):
+                print("\nError: Semua kolom wajib diisi!")
+                pause(); continue # Balik ke atas
+
+            tanggal = datetime.now().strftime("%d-%m-%Y")
+            new_item = {
+                "id_buku": id_buku,
+                "kategori": kategori,
+                "judul_buku": judul_buku,
+                "nama_penulis": nama_penulis,
+                "stok": stok,
+                "tanggal": tanggal
+            }
+            
+        elif item_type == "user":
+            # --- INPUT ID USER ---
+            id_user = input("\nID User (atau ketik 'batal' untuk kembali): ").strip().upper()
+            if id_user == 'BATAL': break
+
+            if not id_user:
+                print("Error: ID User tidak boleh kosong!")
+                pause(); continue
+
             if any(item['id_user'] == id_user for item in data):
-                print("\nID User sudah ada! Gunakan ID lain.")
-            else:
-                break
+                print("Error: ID User sudah ada!")
+                pause(); continue
                 
-        nama = input("Nama: ").strip()
-        umur = input("Umur: ").strip()
-        no_telp = input("No. Telp: ").strip()
-        member = input("Member (ada/tidak ada): ").strip()
-        
-        while True:
+            nama = input("Nama: ").strip()
+            umur = input("Umur: ").strip()
+            no_telp = input("No. Telp: ").strip()
+            member = input("Member (ada/tidak ada): ").strip()
+            
+            if not all([nama, umur, no_telp, member]):
+                print("\nError: Semua kolom profil wajib diisi!")
+                pause(); continue
+            
             username = input("Username: ").strip()
-            if username == "":
-                print("Username tidak boleh kosong!")
-            elif any(user["username"] == username for user in data):
-                print("Username sudah digunakan!")
-            else:
-                break
-                
-        password = input("Password: ").strip()
-        new_item = {
-            "id_user": id_user,
-            "nama": nama,
-            "umur": umur,
-            "no_telp": no_telp,
-            "member": member,
-            "username": username,
-            "password": password
-        }
-    else:
-        print("\nTipe data tidak dikenali!")
-        pause()
-        return
+            password = input("Password: ").strip()
+
+            if not username or not password:
+                print("Error: Akun (Username/PW) tidak boleh kosong!")
+                pause(); continue
+
+            if any(user["username"] == username for user in data):
+                print("Error: Username sudah digunakan!")
+                pause(); continue
+
+            new_item = {
+                "id_user": id_user,
+                "nama": nama,
+                "umur": umur,
+                "no_telp": no_telp,
+                "member": member,
+                "username": username,
+                "password": password
+            }
         
-    data.append(new_item)
-    simpan_data(file, data)
-    print("\n✓ Data berhasil ditambahkan!")
-    pause()
-
-
+        # JIKA SEMUA VALID, SIMPAN DAN KELUAR KE MENU UTAMA CRUD
+        data.append(new_item)
+        simpan_data(file, data)
+        print("\nData berhasil ditambahkan!")
+        pause()
+        break # Keluar dari loop tambah data
+    
 def edit_data(file, item_type):
     """Mengubah data berdasarkan indeks, otomatis mempertahankan nilai lama jika input baru dikosongkan"""
     clear_screen()
@@ -264,12 +295,22 @@ def cari_data(file, item_type):
         
     if item_type == "buku":
         keyword = input("\nMasukkan judul buku atau nama penulis: ").strip().lower()
+        if not keyword:
+            print("\nKata kunci pencarian tidak boleh kosong!")
+            pause()
+            return
+            
         hasil = [
             item for item in data
             if keyword in item['judul_buku'].lower() or keyword in item['nama_penulis'].lower()
         ]
     elif item_type == "user":
         keyword = input("\nMasukkan nama atau username: ").strip().lower()
+        if not keyword:
+            print("\nKata kunci pencarian tidak boleh kosong!")
+            pause()
+            return
+            
         hasil = [
             item for item in data
             if keyword in item['nama'].lower() or keyword in item['username'].lower()

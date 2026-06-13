@@ -121,7 +121,13 @@ def pause():
 
 
 def cek_member(username):
-    """Memverifikasi validitas pengunjung dengan memeriksa username dan status keanggotaannya di database"""
+    """Memverifikasi validitas pengunjung dengan memeriksa username dan status keanggotaannya"""
+    # Error handling jika input kosong
+    if not username or username.strip() == "":
+        print("\n[PERINGATAN] Username tidak boleh kosong!")
+        pause()
+        return False
+
     data = baca_data(USER_FILE)
     for member in data:
         if member["username"] == username:
@@ -133,7 +139,13 @@ def cek_member(username):
 
 
 def cari_buku(input_buku, data_buku):
-    """Mencari objek buku secara sekuensial berdasarkan ID atau Judul, lalu mengembalikan referensinya"""
+    """Mencari objek buku secara sekuensial berdasarkan ID atau Judul"""
+    # Error handling jika input kosong
+    if not input_buku or input_buku.strip() == "":
+        print("\n[PERINGATAN] ID atau Judul Buku tidak boleh kosong!")
+        pause()
+        return None
+
     for buku in data_buku:
         if buku["id_buku"].lower() == input_buku.lower() or buku["judul_buku"].lower() == input_buku.lower():
             return buku  

@@ -77,7 +77,14 @@ def proses_peminjaman(ll_peminjaman, stack_riwayat):
     data_buku = baca_data(BUKU_FILE)
     cek_data(data_buku, "buku")
     
-    username = input("\nMasukkan username pengunjung: ")
+    username = input("\nMasukkan username pengunjung: ").strip()
+    
+    # Error handling jika username kosong
+    if not username:
+        print("\n[PERINGATAN] Username tidak boleh kosong!")
+        pause()
+        return
+
     # cek member
     if not cek_member(username):
         print("Pengunjung bukan member! Harus daftar dulu.")
@@ -85,7 +92,14 @@ def proses_peminjaman(ll_peminjaman, stack_riwayat):
         return
         
     print("Member ditemukan.")
-    input_buku = input("Masukkan ID / Judul Buku: ")
+    input_buku = input("Masukkan ID / Judul Buku: ").strip()
+    
+    # Error handling jika input buku kosong
+    if not input_buku:
+        print("\n[PERINGATAN] ID atau Judul buku tidak boleh kosong!")
+        pause()
+        return
+
     buku = cari_buku(input_buku, data_buku)
     
     if not buku:
@@ -98,8 +112,15 @@ def proses_peminjaman(ll_peminjaman, stack_riwayat):
         pause()
         return
         
-    konfirmasi = input("Izinkan peminjaman? (y/n): ")
-    if konfirmasi.lower() == 'y':
+    konfirmasi = input("Izinkan peminjaman? (y/n): ").strip().lower()
+    
+    # Error handling jika konfirmasi kosong
+    if not konfirmasi:
+        print("\n[PERINGATAN] Pilihan konfirmasi tidak boleh kosong!")
+        pause()
+        return
+
+    if konfirmasi == 'y':
         data_pinjam = {
             "username": username,
             "id_buku": buku["id_buku"],
@@ -151,7 +172,15 @@ def edit_data_peminjaman(ll_peminjaman):
         return
         
     try:
-        pilihan = int(input("\nMasukkan nomor data yang ingin diedit (0 untuk batal): "))
+        raw_pilihan = input("\nMasukkan nomor data yang ingin diedit (0 untuk batal): ").strip()
+        
+        # Error handling jika input nomor kosong
+        if not raw_pilihan:
+            print("\n[PERINGATAN] Nomor data tidak boleh kosong!")
+            pause()
+            return
+
+        pilihan = int(raw_pilihan)
         if pilihan == 0:
             print("Pengeditan dibatalkan.")
             pause()
@@ -172,7 +201,6 @@ def edit_data_peminjaman(ll_peminjaman):
             print(f"Peminjam : {data_edit['username']}")
             print(f"Tgl Kembali Saat Ini : Belum dikembalikan")
             
-            # --- PERUBAHAN INPUT TANGGAL ---
             tgl_baru = input("Masukkan Tanggal Pengembalian (DD-MM-YYYY) [Tekan Enter untuk hari ini]: ").strip()
             # Jika input kosong, otomatis gunakan tanggal hari ini
             if not tgl_baru:
@@ -183,7 +211,7 @@ def edit_data_peminjaman(ll_peminjaman):
             data_peminjaman[idx]['tanggal_pengembalian'] = tgl_baru
             simpan_data(PEMINJAMAN_FILE, data_peminjaman) 
             
-            # 2. Update data yang sama di Linked List agar saat disave (opsi 4) tidak nimpa jadi null lagi
+            # 2. Update data yang sama di Linked List
             current = ll_peminjaman.head
             while current:
                 if (current.data['username'] == data_edit['username'] and 
@@ -209,7 +237,7 @@ def edit_data_peminjaman(ll_peminjaman):
 
 
 def undo_peminjaman(ll_peminjaman, stack_riwayat):
-    """Membatalkan peminjaman terakhir, menghapusnya dari antrean, dan memulihkan stok buku"""
+    """Membatalkan peminjaman terakhir, menghapusnya dari antrean, file JSON, dan memulihkan stok buku"""
     if stack_riwayat.kosong():
         print("\nTidak ada riwayat peminjaman yang bisa di-undo.")
         pause()
@@ -217,9 +245,25 @@ def undo_peminjaman(ll_peminjaman, stack_riwayat):
         
     # 1. Ambil data terakhir dari stack (Pop)
     data_batal = stack_riwayat.pop()
-    # 2. Hapus data dari Linked List
+    
+    # 2. Hapus data dari Linked List (Memori Sementara)
     ll_peminjaman.hapus_terakhir()
-    # 3. Kembalikan stok buku
+    
+    # 3. Hapus data dari file JSON (Penyimpanan Permanen)
+    # Kita baca data lama, lalu simpan kembali SEMUA KECUALI data yang di-undo
+    data_json = baca_data(PEMINJAMAN_FILE)
+    if data_json:
+        # Filter data: simpan data yang TIDAK cocok dengan kriteria data_batal
+        data_json_baru = [
+            item for item in data_json 
+            if not (item['username'] == data_batal['username'] and 
+                    item['id_buku'] == data_batal['id_buku'] and 
+                    item['tanggal_peminjaman'] == data_batal['tanggal_peminjaman'])
+        ]
+        # Simpan kembali list yang sudah difilter ke JSON
+        simpan_data(PEMINJAMAN_FILE, data_json_baru)
+
+    # 4. Kembalikan stok buku ke database buku
     data_buku = baca_data(BUKU_FILE)
     buku = cari_buku(data_batal["id_buku"], data_buku)
     
@@ -229,10 +273,10 @@ def undo_peminjaman(ll_peminjaman, stack_riwayat):
         
     print(f"\nBerhasil Undo! Peminjaman buku '{data_batal['judul_buku']}' "
           f"oleh {data_batal['username']} telah dibatalkan.")
-    print("Stok buku telah dikembalikan.")
+    print("Data telah dihapus dari memori & JSON. Stok buku telah dikembalikan.")
     pause()
-
-
+    
+    
 def peminjaman_menu(ll_peminjaman):
     """Sub-menu routing khusus untuk mengelola sirkulasi dan sinkronisasi peminjaman"""
     stack_riwayat = Stack()
@@ -250,20 +294,24 @@ def peminjaman_menu(ll_peminjaman):
         
         choice = input("\nPilih (0-5): ").strip()
         
+        # Error handling jika pilihan menu kosong
+        if not choice:
+            print("\n[PERINGATAN] Pilihan tidak boleh kosong!")
+            pause()
+            continue
+
         if choice == "1":
             proses_peminjaman(ll_peminjaman, stack_riwayat)
         elif choice == "2":
             tampilkan_data_peminjaman()
             pause()
         elif choice == "3":
-            # Pass ll_peminjaman agar bisa diupdate
             edit_data_peminjaman(ll_peminjaman)
         elif choice == "4":
             data_list = ll_peminjaman.to_list()
             if not data_list:
                 print("\nBelum ada data peminjaman. Tidak bisa disimpan.")
             else:
-                # Pastikan memberikan DUA parameter: LinkedList dan nama filenya
                 simpan_peminjaman(ll_peminjaman, PEMINJAMAN_FILE)
             pause()
         elif choice == "5":

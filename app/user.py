@@ -13,9 +13,9 @@ def login_pengunjung(ll_peminjaman):
     username = input("Username: ").strip()
     password = input("Password: ").strip()
     
-    # validasi input kosong
-    if username == "" or password == "":
-        print("\nUsername dan password tidak boleh kosong!")
+    # Validasi error handling jika username atau password kosong
+    if not username or not password:
+        print("\n[PERINGATAN] Username dan password tidak boleh kosong!")
         pause()
         return
         
@@ -96,8 +96,14 @@ def user_menu(username_login, ll_peminjaman, is_member):
         print("1. Lihat status peminjaman")
         print("0. Logout")
         
-        choice = input("\nPilih menu: ")
+        choice = input("\nPilih menu: ").strip()
         
+        # Validasi error handling jika pilihan menu kosong
+        if not choice:
+            print("\n[PERINGATAN] Pilihan tidak boleh kosong!")
+            pause()
+            continue
+
         if choice == "1":
             lihat_status_peminjaman(username_login, ll_peminjaman)
         elif choice == "0":

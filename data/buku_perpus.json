@@ -36,7 +36,7 @@
     "kategori": "Sejarah",
     "judul_buku": "Peralihan Zaman",
     "nama_penulis": "Soe Hok Gie",
-    "stok": 2,
+    "stok": 1,
     "tanggal": "17-08-2020"
   },
   {
@@ -140,7 +140,7 @@
     "kategori": "Novel",
     "judul_buku": "1984",
     "nama_penulis": "George Orwell",
-    "stok": 4,
+    "stok": 3,
     "tanggal": "17-02-2016"
   },
   {
@@ -156,7 +156,7 @@
     "kategori": "Politik",
     "judul_buku": "The Jakarta Method",
     "nama_penulis": "Vincent Bevins",
-    "stok": 3,
+    "stok": 2,
     "tanggal": "12-05-2022"
   }
 ]
