@@ -32,7 +32,6 @@ Gie's Library menyediakan beberapa fitur utama, yaitu:
 ## Kelompok 21
 
 | Nama | NIM |
-|---|---|
 | Ezra Faira Azzahra Faisal | J0403251030 |
 | Shofia Aziza Iman | J0403251050 |
 | Alyya Putri Sekarwangi | J0403251109 |
@@ -44,6 +43,7 @@ Gie's Library menyediakan beberapa fitur utama, yaitu:
 - Kelola Data Buku
 - Kelola Data Pengunjung
 - Kelola Data Peminjaman Buku
+- Kelola Fitur Undo Peminjaman
 
 ### Shofia Aziza Iman
 - Membuat Data Pengunjung
@@ -137,6 +137,7 @@ Password: `admin123`
    - Mengelola Data Buku
    - Mengelola Data Pengunjung
    - Mengelola Data Peminjaman
+   - Melakukan Undo Peminjaman
    - Mencetak Laporan PDF
 
 ## Data Structure
@@ -329,4 +330,4 @@ ke dalam sebuah aplikasi Sistem Manajemen Perpustakaan berbasis Command Line Int
 
 Gie's Library merupakan aplikasi manajemen perpustakaan berbasis Python CLI yang membantu proses pengelolaan data buku, data pengunjung, peminjaman, pengembalian, serta pembuatan laporan PDF. Aplikasi ini menerapkan konsep struktur data, algoritma pencarian dan pengurutan, modular programming, serta file handling JSON sebagai media penyimpanan data.
 
-Repository: Gie's Library
+Repository: ASD_B_21
